@@ -1,0 +1,8 @@
+services:
+    bacnet_tests:
+        entrypoint: /usr/bin/tests.sh
+        image: mfrancis95/bacnet-stack
+        network_mode: host
+        volumes:
+            - .:/usr/bin
+version: '3'
