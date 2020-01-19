@@ -31,12 +31,15 @@ success() {
     message 32 "$1"
 }
 
-# Who-Is Test
-info 'Running Who-Is test...'
-if ! type bacwi &> /dev/null; then
-    failure "Failed Who-Is test. bacwi executable wasn't found."
+info 'Checking location of bacwi executable...'
+if type bacwi &> /dev/null; then
+    success 'bacwi executable found.'
+else
+    failure "bacwi executable not found. Can't continue with the rest of the tests."
     exit 1
 fi
+
+info 'Running Who-Is test...'
 bacwi > /dev/null 2> temp.txt
 # Received I-Am Request from $device_id, MAC = $ip BAC0
 read received iam request from device_id mac equals ip bac0 < temp.txt
@@ -45,7 +48,15 @@ if [ "$received" != Received ]; then
     exit 1
 fi
 device_id=${device_id::-1}
-success 'Passed Who-Is test.'
+success "Passed Who-Is test. Device ID = $device_id."
+
+info 'Checking location of bacrp executable...'
+if type bacrp &> /dev/null; then
+    success 'bacrp executable found.'
+else
+    failure "bacrp executable not found. Can't continue with the rest of the tests."
+    exit 1
+fi
 
 info 'Running Device Read Property tests...'
 IFS='='
