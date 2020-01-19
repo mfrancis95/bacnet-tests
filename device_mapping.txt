@@ -1,5 +1,6 @@
 APDU_Timeout,11
 Max_APDU_Length_Accepted,62
+Max_Number_Of_APDU_Retries,73
 Object_Identifier,75
 Object_Name,77
 Object_Type,79
