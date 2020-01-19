@@ -1,8 +1,12 @@
 services:
     bacnet_tests:
-        entrypoint: sh /usr/bin/tests.sh
+        entrypoint: sh /home/tests.sh
+        environment:
+            - DEVICE_FILE=/home/expected/device.txt
+            - DEVICE_MAPPING_FILE=/home/device_mapping.txt
         image: mfrancis95/bacnet-stack
         network_mode: host
         volumes:
-            - .:/usr/bin
+            - .:/home
+            - $EXPECTED:/home/expected
 version: '3'
