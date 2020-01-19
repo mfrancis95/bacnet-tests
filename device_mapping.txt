@@ -1,4 +1,5 @@
 APDU_Timeout,11
+Max_APDU_Length_Accepted,62
 Segmentation_Supported,107
 Vendor_Identifier,120
 Vendor_Name,121
