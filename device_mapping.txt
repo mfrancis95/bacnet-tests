@@ -9,6 +9,7 @@ Object_Name=77
 Object_Type=79
 Protocol_Object_Types_Supported=96
 Protocol_Services_Supported=97
+Protocol_Version=98
 Segmentation_Supported=107
 Vendor_Identifier=120
 Vendor_Name=121
