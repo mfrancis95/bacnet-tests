@@ -1,3 +1,4 @@
+APDU_Timeout,11
 Segmentation_Supported,107
 Vendor_Identifier,120
 Vendor_Name,121
