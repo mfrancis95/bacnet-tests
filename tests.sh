@@ -31,6 +31,8 @@ success() {
     message 32 "$1"
 }
 
+info 'Starting tests...'
+
 info 'Checking location of bacwi executable...'
 if type bacwi &> /dev/null; then
     success 'bacwi executable found.'
@@ -50,22 +52,27 @@ fi
 device_id=${device_id::-1}
 success "Passed Who-Is test. Device ID = $device_id."
 
-info 'Checking location of bacrp executable...'
-if type bacrp &> /dev/null; then
-    success 'bacrp executable found.'
+if [ "$SKIP_READ" ]; then
+    info 'Skipping Device Read Property tests...'
 else
-    failure "bacrp executable not found. Can't continue with the rest of the tests."
-    exit 1
+    info 'Checking location of bacrp executable...'
+    if type bacrp &> /dev/null; then
+        success 'bacrp executable found.'
+    else
+        failure "bacrp executable not found. Can't continue with the rest of the tests."
+        exit 1
+    fi
+
+    info 'Running Device Read Property tests...'
+    IFS='='
+    read_property $device_id Object_Identifier
+    compare Object_Identifier '(device, 0)' "$value"
+    read_property $device_id Object_Type
+    compare Object_Type $DEVICE_OBJECT_TYPE $value
+    while read property expected; do
+        read_property $device_id $property
+        compare $property $expected $value
+    done < $DEVICE_FILE
 fi
 
-info 'Running Device Read Property tests...'
-IFS='='
-read_property $device_id Object_Identifier
-compare Object_Identifier '(device, 0)' "$value"
-read_property $device_id Object_Type
-compare Object_Type $DEVICE_OBJECT_TYPE $value
-while read property expected; do
-    read_property $device_id $property
-    compare $property $expected $value
-done < $DEVICE_FILE
 info 'Finished running tests.'

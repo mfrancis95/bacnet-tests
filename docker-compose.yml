@@ -4,6 +4,7 @@ services:
         environment:
             - DEVICE_FILE=/home/expected/device.txt
             - DEVICE_MAPPING_FILE=/home/device_mapping.txt
+            - SKIP_READ=$SKIP_READ
         image: mfrancis95/bacnet-stack
         network_mode: host
         volumes:

@@ -15,4 +15,4 @@ Simply run `docker-compose up`.
 * Inside the directory created from the clone, run `make`.
 * Add the `bin` directory to your `$PATH`.
 
-With all that set up, running `/.tests.sh` will invoke the testing.
+With all that set up, running `./tests.sh` will invoke the testing.
