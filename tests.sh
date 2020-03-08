@@ -1,5 +1,14 @@
 DEVICE_OBJECT_TYPE=8
 
+check_executable() {
+    if type $1 &> /dev/null; then
+        success "$1 executable found."
+    else
+        failure "$1 executable not found. Can't continue with the rest of the tests."
+        exit 1
+    fi
+}
+
 compare() {
     if [ "$2" == "$3" ]; then
         success "Passed $1 test. Expected value: $2."
@@ -34,12 +43,7 @@ success() {
 info 'Starting tests...'
 
 info 'Checking location of bacwi executable...'
-if type bacwi &> /dev/null; then
-    success 'bacwi executable found.'
-else
-    failure "bacwi executable not found. Can't continue with the rest of the tests."
-    exit 1
-fi
+check_executable bacwi
 
 info 'Running Who-Is test...'
 bacwi > /dev/null 2> temp.txt
@@ -56,12 +60,7 @@ if [ "$SKIP_READ" ]; then
     info 'Skipping Device Read Property tests...'
 else
     info 'Checking location of bacrp executable...'
-    if type bacrp &> /dev/null; then
-        success 'bacrp executable found.'
-    else
-        failure "bacrp executable not found. Can't continue with the rest of the tests."
-        exit 1
-    fi
+    check_executable bacrp
 
     info 'Running Device Read Property tests...'
     IFS='='
