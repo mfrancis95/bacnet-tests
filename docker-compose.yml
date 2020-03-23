@@ -2,8 +2,8 @@ services:
     bacnet_tests:
         entrypoint: sh /home/tests.sh
         environment:
-            - DEVICE_FILE=/home/expected/device.txt
-            - DEVICE_MAPPING_FILE=/home/device_mapping.txt
+            - EXPECTED=/home/expected
+            - PROPERTY_MAPPING_FILE=/home/property_mapping.txt
             - SKIP_READ=$SKIP_READ
         image: mfrancis95/bacnet-stack
         network_mode: host

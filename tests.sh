@@ -1,5 +1,3 @@
-DEVICE_OBJECT_TYPE=8
-
 check_executable() {
     if type $1 &> /dev/null; then
         success "$1 executable found."
@@ -30,9 +28,9 @@ message() {
 }
 
 read_property() {
-    grep $2 $DEVICE_MAPPING_FILE > temp.txt
+    grep $2 $PROPERTY_MAPPING_FILE > temp.txt
     read property property_id < temp.txt
-    value=$(bacrp $1 $DEVICE_OBJECT_TYPE 0 $property_id)
+    value=$(bacrp $1 8 0 $property_id)
     value=${value::-1}
 }
 
@@ -67,11 +65,11 @@ else
     read_property $device_id Object_Identifier
     compare Object_Identifier '(device, 0)' "$value"
     read_property $device_id Object_Type
-    compare Object_Type $DEVICE_OBJECT_TYPE $value
+    compare Object_Type device $value
     while read property expected; do
         read_property $device_id $property
         compare $property $expected $value
-    done < $DEVICE_FILE
+    done < $EXPECTED/device.txt
 fi
 
 info 'Finished running tests.'
